@@ -1,11 +1,15 @@
 package com.globant.ecommerce.user.service;
-
 import java.util.List;
 import java.util.Random;
-
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.client.RestTemplate;
 import com.globant.ecommerce.user.DAO.UserDAO;
 import com.globant.ecommerce.user.model.User;
 
@@ -13,6 +17,8 @@ import com.globant.ecommerce.user.model.User;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	UserDAO userDAO;
+	@Autowired
+	RestTemplate restTemplate;
 	
 	@Override
 	public User register(User user) {
@@ -78,6 +84,30 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> findAllUsers() {	
 		return (List<User>) userDAO.findAll();
+	}
+
+	@Override
+	public boolean authenticate(String authToken) {
+		String url="http://localhost:8080/checklogin";
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("authToken", authToken);
+		HttpEntity entity = new HttpEntity(headers);
+		ResponseEntity<String> resp = restTemplate.exchange(
+		    url, HttpMethod.GET, entity, String.class);
+		JSONObject jo=null;
+		String statusCode=null;
+		try {
+			jo = new JSONObject(resp.getBody());
+			System.out.println(resp.getBody());
+			statusCode=jo.getString("statusCode");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(statusCode.equals("200")) {
+			return true;
+		}
+		return false;
 	}
 
 }

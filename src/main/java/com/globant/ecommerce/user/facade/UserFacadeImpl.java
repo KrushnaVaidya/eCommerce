@@ -21,37 +21,31 @@ public class UserFacadeImpl implements UserFacade {
 
 	@Override
 	public User login(String email, String password) {
-		// TODO Auto-generated method stub
 		return userService.login(email, password);
 	}
 
 	@Override
 	public User update(User user) {
-		// TODO Auto-generated method stub
 		return userService.update(user);
 	}
 
 	@Override
 	public boolean logout(User user) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public User findByEmail(String email) {
-		// TODO Auto-generated method stub
 		return userService.findByEmail(email);
 	}
 
 	@Override
 	public User findById(int id) {
-		// TODO Auto-generated method stub
 		return userService.FindById(id);
 	}
 
 	@Override
 	public User checkUserLoginStatus(String authToken) {
-		// TODO Auto-generated method stub
 		return userService.checkUserLoginStatus(authToken);
 	}
 
@@ -59,6 +53,11 @@ public class UserFacadeImpl implements UserFacade {
 	public List<User> findAllUsers() {
 		// TODO Auto-generated method stub
 		return userService.findAllUsers();
+	}
+
+	@Override
+	public boolean authenticate(String authToken) {
+		return userService.authenticate(authToken);
 	}
 
 }

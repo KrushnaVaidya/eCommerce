@@ -77,8 +77,6 @@ public class User {
 		this.address = address;
 	}
 
-
-
 	public String getAuthToken() {
 		return authToken;
 	}
