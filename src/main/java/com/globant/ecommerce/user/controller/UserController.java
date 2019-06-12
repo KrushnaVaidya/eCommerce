@@ -21,7 +21,7 @@ public class UserController {
 	@Autowired
 	private UserFacadeImpl userFacade;
 	@PostMapping("/user/register")
-	public Response<User> register(@RequestBody User user) {
+	public Response<User> register(@RequestBody User user) throws Exception{
 		Response<User> response=new Response<User>();
 		List<User> data=new ArrayList<User>();
 		if(!user.getEmail().equals("") && !user.getPassword().equals("")) {			
@@ -60,7 +60,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/user/login")
-	public Response<User> Login(@RequestBody String reqBody){
+	public Response<User> Login(@RequestBody String reqBody)throws Exception{
 		JSONObject jo = null;
 		String email = null,password = null;
 		Response<User> response=new Response<User>();
@@ -105,7 +105,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/user/update/{userid}")
-	public Response<User> update(@RequestBody User user,@PathVariable("userid")int id,@RequestHeader(value = "authToken",defaultValue = "")String authToken) {
+	public Response<User> update(@RequestBody User user,@PathVariable("userid")int id,@RequestHeader(value = "authToken",defaultValue = "")String authToken)throws Exception {
 		Response<User> response=new Response<User>();
 		if(userFacade.authenticate(authToken)) {
 			User userAvailability=userFacade.findById(id);
@@ -204,7 +204,7 @@ public class UserController {
 		return response;	
 	}
 	@PostMapping("/user/logout/{userid}")
-	public Response<User> logout(@PathVariable("userid")int id){
+	public Response<User> logout(@PathVariable("userid")int id)throws Exception{
 		User userAvailability=userFacade.findById(id);
 		List<User> data=new ArrayList<User>();
 		Response<User> response=new Response<User>();
@@ -229,7 +229,7 @@ public class UserController {
 		return response;
 	}
 	@GetMapping("/user/getallusers")
-	public Response<User> getAllUsers(@RequestHeader(value = "authToken",defaultValue = "")String authToken){
+	public Response<User> getAllUsers(@RequestHeader(value = "authToken",defaultValue = "")String authToken)throws Exception{
 		Response<User> response=new Response<User>();
 		if(userFacade.authenticate(authToken)) {
 			List<User> data=null;		
@@ -245,8 +245,7 @@ public class UserController {
 		
 	}
 	@GetMapping("/checklogin")
-	public LoginResponse checkLoginStatus(@RequestHeader(value = "authToken",defaultValue = "")String authToken) {
-		
+	public LoginResponse checkLoginStatus(@RequestHeader(value = "authToken",defaultValue = "")String authToken) throws Exception{
 		LoginResponse response=new LoginResponse();
 		User user=userFacade.checkUserLoginStatus(authToken);
 		if(user!=null) {

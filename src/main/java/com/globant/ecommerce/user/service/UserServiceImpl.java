@@ -12,20 +12,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import com.globant.ecommerce.user.DAO.UserDAO;
 import com.globant.ecommerce.user.model.User;
-
+/**
+ * 
+ * @author krushna.vaidya
+ * This class contains all method for handling all user related Operation (ex. login,logout)
+ *
+ */
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired
 	UserDAO userDAO;
 	@Autowired
 	RestTemplate restTemplate;
-	
 	@Override
 	public User register(User user) {
 		return userDAO.save(user);
 		
 	}
-
 	@Override
 	public User login(String email, String password) {
 		User user=userDAO.findByEmailAndPassword(email, password);
