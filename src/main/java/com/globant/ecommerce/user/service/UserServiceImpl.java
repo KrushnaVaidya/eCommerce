@@ -90,27 +90,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean authenticate(String authToken) {
+	public boolean authenticate(String authToken) throws Exception {
 		String url="http://localhost:8080/checklogin";
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("authToken", authToken);
+		System.out.println("checking ....Auth Token");
 		HttpEntity entity = new HttpEntity(headers);
 		ResponseEntity<String> resp = restTemplate.exchange(
 		    url, HttpMethod.GET, entity, String.class);
-		JSONObject jo=null;
-		String statusCode=null;
-		try {
-			jo = new JSONObject(resp.getBody());
-			System.out.println(resp.getBody());
-			statusCode=jo.getString("statusCode");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if(statusCode.equals("200")) {
+		System.out.println("checked");
+		System.out.println(resp.getStatusCodeValue());
+		if(resp.getStatusCodeValue()==200) 
 			return true;
-		}
 		return false;
+	
 	}
 
 }

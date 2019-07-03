@@ -13,5 +13,5 @@ public interface UserFacade {
 	public User findById(int id);
 	public User checkUserLoginStatus(String authToken);
 	public List<User> findAllUsers();
-	public boolean authenticate(String authToken);
+	public boolean authenticate(String authToken) throws Exception;
 }

@@ -62,6 +62,7 @@ public interface UserService {
 	 * This method authenticate user.
 	 * @param authToken
 	 * @return
+	 * @throws Exception 
 	 */
-	public boolean authenticate(String authToken);
+	public boolean authenticate(String authToken) throws Exception;
 }

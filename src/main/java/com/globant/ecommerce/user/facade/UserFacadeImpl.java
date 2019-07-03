@@ -56,7 +56,7 @@ public class UserFacadeImpl implements UserFacade {
 	}
 
 	@Override
-	public boolean authenticate(String authToken) {
+	public boolean authenticate(String authToken) throws Exception {
 		return userService.authenticate(authToken);
 	}
 
